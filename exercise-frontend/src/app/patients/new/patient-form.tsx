@@ -1,19 +1,22 @@
 'use client'
 
-import React, {useState} from "react";
-import {useRouter} from "next/navigation";
+import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function PatientForm() {
     const router = useRouter();
     const [newPatient, setNewPatient] = useState({
-        FullName: "",
-        DateOfBirth: new Date(),
-        Email: "",
-        PhoneNumber: "",
-        adhdDiagnosisSelection: "",
+        id: "",
+        fullName: "",
+        dateOfBirth: new Date(),
+        contact: {
+            email: "",
+            phoneNumber: ""
+        },
+        diagnosisStatus: "",
         notes: ""
     });
-    const [adhdDiagnosisOptions] = useState(["Mild", "Moderate", "Severe"])
+    const [diagnosisOptions] = useState(["Mild", "Moderate", "Severe"])
 
     function createNewPatient(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault()
@@ -21,35 +24,35 @@ export default function PatientForm() {
         fetch("/patient/create", {
             body: JSON.stringify(newPatient),
             method: "POST"
-        }).then(res => router.push("/patient"))
+        }).then(() => router.push("/patient"))
     }
 
     return <div>
         <form onSubmit={(e) => createNewPatient(e)} className={"flex flex-col"}>
             <label>Full Name
-                <input type="text" placeholder="Full name" value={newPatient.FullName}
-                       onChange={(e) => setNewPatient({...newPatient, FullName: e.target.value})}/>
+                <input type="text" placeholder="Full name" value={newPatient.fullName}
+                    onChange={(e) => setNewPatient({ ...newPatient, fullName: e.target.value })} />
             </label>
-            {/*<input type="date" value={newPatient.DateOfBirth}/>*/}
+            {/*<input type="date" value={newPatient.dateOfBirth}/>*/}
             <label>Email
-                <input type={"text"} placeholder={"Email"} value={newPatient.Email}
-                       onChange={(e) => setNewPatient({...newPatient, Email: e.target.value})}/>
+                <input type={"text"} placeholder={"Email"} value={newPatient.contact.email}
+                    onChange={(e) => setNewPatient({ ...newPatient, contact: { ...newPatient.contact, email: e.target.value } })} />
             </label>
             <label>Phone Number
-                <input type={"text"} placeholder={"Phone Number"} value={newPatient.PhoneNumber}
-                       onChange={(e) => setNewPatient({
-                           ...newPatient,
-                           PhoneNumber: e.target.value
-                       })}/></label>
+                <input type={"text"} placeholder={"Phone Number"} value={newPatient.contact.phoneNumber}
+                    onChange={(e) => setNewPatient({
+                        ...newPatient, contact:
+                            { ...newPatient.contact, phoneNumber: e.target.value }
+                    })} /></label>
             <label>ADHD Diagnosis
-                <select value={newPatient.adhdDiagnosisSelection}
-                        onChange={(e) => setNewPatient({
-                            ...newPatient,
-                            adhdDiagnosisSelection: e.target.value
-                        })}>
+                <select value={newPatient.diagnosisStatus}
+                    onChange={(e) => setNewPatient({
+                        ...newPatient,
+                        diagnosisStatus: e.target.value
+                    })}>
                     {
-                        adhdDiagnosisOptions.map((adhdOption) => {
-                            return <option key={adhdOption} value={adhdOption}>{adhdOption}</option>
+                        diagnosisOptions.map((diagnosisOption) => {
+                            return <option key={diagnosisOption} value={diagnosisOption}>{diagnosisOption}</option>
                         })
                     }
                 </select></label>
