@@ -1,0 +1,17 @@
+### A simple call to get all the patients from the api
+GET http://localhost:3001/patients
+### Save a dummy patient record to check it's behaving
+POST http://localhost:3001/patients/d4ca3f55-01d8-4b6c-ab48-495df46f755b
+Content-Type: application/json
+
+{
+    "id": "d4ca3f55-01d8-4b6c-ab48-495df46f755b",
+    "fullName": "asdf",
+    "dateOfBirth": "2024-12-30T00:00:00.000Z",
+    "contact": {
+        "email": "test@test.com",
+        "phoneNumber": "123"
+    },
+    "diagnosisStatus": "",
+    "notes": ""
+}
