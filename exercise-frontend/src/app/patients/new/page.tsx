@@ -1,8 +1,10 @@
-import PatientForm from "@/app/patients/new/patient-form";
+import PatientForm from "@/app/patients/components/patient-form";
 
 export default function Page() {
 
-    return <div>
-            <PatientForm/>
-    </div>
+    return (
+        <div>
+            <PatientForm method="POST" />
+        </div>
+    )
 }
